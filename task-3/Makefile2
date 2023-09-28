@@ -1,0 +1,60 @@
+PROJECT_ROOT = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+
+CFLAGS += -O2 -std=c++17 -Wall -Wfatal-errors 
+
+EXEC = gpx-tests
+
+LDFLAGS += -lboost_unit_test_framework
+
+INCDIR = $(mkfile_dir)headers 
+INCDIR+=-I$(mkfile_dir)headers/gridworld
+INCDIR+=-I$(mkfile_dir)headers/xml
+OBJDIR = $(mkfile_dir)obj
+OBJDIR1 = $(mkfile_dir)obj/gridworld
+OBJDIR2 = $(mkfile_dir)obj/xml
+OBJDIR3 = $(mkfile_dir)obj/gpx-tests
+SRCDIR = $(mkfile_dir)src
+BINDIR = $(mkfile_dir)bin
+
+$(shell mkdir -p $(OBJDIR))
+$(shell mkdir -p $(OBJDIR1))
+$(shell mkdir -p $(OBJDIR2))
+$(shell mkdir -p $(OBJDIR3))
+$(shell mkdir -p $(BINDIR))
+
+SOURCES += \
+    earth.cpp \
+    gpx-tests.cpp \
+    geometry.cpp \
+    logs.cpp \
+    position.cpp \
+    route.cpp \
+    track.cpp \
+    xml/element.cpp \
+    xml/parser.cpp \
+    gpx-tests/name.cpp \
+    gpx-tests/numpositions.cpp \
+    gpx-tests/route_exceptions.cpp \
+    gpx-tests/track_exceptions.cpp \
+    gpx-tests/name-track.cpp \
+    gpx-tests/pt_names.cpp 
+
+_OBJ = $(SOURCES:.cpp=.o)
+OBJ = $(patsubst %,$(OBJDIR)/%,$(_OBJ))
+
+all: $(BINDIR)/$(EXEC)
+
+CFLAGS += -I$(INCDIR) -I$(SRCDIR) 
+
+
+all: $(BINDIR)/$(EXEC)
+	
+
+$(BINDIR)/$(EXEC): $(OBJ)
+	$(CXX) -o $(BINDIR)/$(EXEC) $(OBJ) $(LDFLAGS)  
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CXX) -c -o $@ $< $(CFLAGS) $(CXXFLAGS) $(EXTRA_FLAGS) $(LDFLAGS)
+
+	
+clean:
+	rm -rf $(OBJDIR) $(BINDIR)
