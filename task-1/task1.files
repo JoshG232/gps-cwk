@@ -14,4 +14,6 @@ src/geometry.cpp
 src/logs-data.cpp
 src/parseNMEA.cpp
 src/position.cpp
+task1.cflags
+task1.cxxflags
 tests/nmea-tests.cpp

@@ -13,45 +13,91 @@ namespace NMEA
 
       //$GP
 
-      bool failed;
-      if (sentence.find("$GP") != std::string::npos) {
-//        cout << "Here" << endl;
-        failed = false;
-      } else {
-          failed = true;
+//      bool failed = false;
+      string dollarSign = "$";
+      string gChar = "G";
+      string pChar = "P";
+      int count = 0;
+      char GPCheck1 = sentence[0];
+      char GPCheck2 = sentence[1];
+      char GPCheck3 = sentence[2];
+//      cout << GPCheck1 << ", " << GPCheck2 << ", " << GPCheck3 << endl;
+//      cout << dollarSign << ", " << gChar << ", " << pChar << endl;
+      if (GPCheck1 == dollarSign[0]){
+//          cout << "Dollar Sign Good" << endl;
+          count++;
       }
-
-      // Three letters
-
-      char char1 = sentence[3];
-      char char2 = sentence[4];
-      char char3 = sentence[5];
-
-
-      if (isalpha(char1) and isalpha(char2) and isalpha(char3)){
-//          cout << "Three letters" << endl;
-          failed = false;
-      } else {
-          failed = true;
+      if (GPCheck2 == gChar[0]){
+//          cout << "G Good" << endl;
+          count++;
       }
-
-      // *
-      string starBruh = "*";
-      char star = sentence[sentence.size() -3];
-      char starTwo = starBruh[0];
-
-      cout << star << endl;
-      if (star == starTwo){
-          failed = false;
-      } else {
-          failed = true;
+      if (GPCheck3 == pChar[0]){
+//          cout << "P Good" << endl;
+          count++;
       }
+      cout << "Count: " << count << endl;
+      if(count == 3){
+          // Three letters
+          if (sentence.size() < 7){
+              cout << "Less than 7" << endl;
+              return false;
+          }
+          char char1 = sentence[3];
+          char char2 = sentence[4];
+          char char3 = sentence[5];
+          cout << char1 << ", " << char2 << ", " << char3 << endl;
 
-      if (failed == true){
+          if (isalpha(char1) and isalpha(char2) and isalpha(char3)){
+              // *
+
+              string starString = "*";
+              char star = sentence[sentence.size() -3];
+              char starTwo = starString[0];
+
+        //      cout << star << endl;
+              if (star == starTwo){
+                  return true;
+              } else {
+                  return false;
+              }
+
+          }
+          else {
+              cout << "Failed for 4,5 and 6 not being characters" << endl;
+              return false;
+          }
+
+      }
+      else {
+          cout << "No match to $GP" << endl;
           return false;
-      } else {
-          return true;
       }
+
+
+
+
+
+
+
+////      Hexadecimal
+//      char hex1 = sentence[sentence.size() -2];
+//      char hex2 = sentence[sentence.size() -1];
+
+
+
+//      if (isxdigit(hex1) and isxdigit(hex2)){
+//          failed = false;
+//      } else {
+//          failed = true;
+//      }
+
+//      cout << "Test: " << failed << endl;
+//      //Test output
+//      if (failed == true){
+//          return false;
+//      } else {
+//          return true;
+//      }
   }
 
   bool hasValidChecksum(std::string)
