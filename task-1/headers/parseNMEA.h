@@ -33,7 +33,7 @@ namespace NMEA
    *
    * Pre-condition: the parameter is a well-formed NMEA sentence.
    */
-  bool hasValidChecksum(std::string);
+  bool hasValidChecksum(std::string sentence);
 
 
   /* The first component of the pair is a NMEA sentence format.

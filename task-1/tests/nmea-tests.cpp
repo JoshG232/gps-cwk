@@ -19,169 +19,169 @@ using namespace NMEA;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-BOOST_AUTO_TEST_SUITE( IsWellFormedSentence )
+//BOOST_AUTO_TEST_SUITE( IsWellFormedSentence )
 
-BOOST_AUTO_TEST_CASE( WellFormedNoFields )
-{
-    BOOST_CHECK( isWellFormedSentence("$GPXXX*01") );
-}
-
-BOOST_AUTO_TEST_CASE( WellFormedOneField )
-{
-    BOOST_CHECK( isWellFormedSentence("$GPXXX,1*23") );
-}
-
-BOOST_AUTO_TEST_CASE( WellFormedTwoFields )
-{
-    BOOST_CHECK( isWellFormedSentence("$GPXXX,1,testing*69") );
-}
-
-BOOST_AUTO_TEST_CASE( WellFormedEmptyField )
-{
-    BOOST_CHECK( isWellFormedSentence("$GPXXX,*99") );
-}
-
-BOOST_AUTO_TEST_CASE( WellFormedManyFields )
-{
-    std::string commas(1000,','); // 1000 fields
-    BOOST_CHECK( isWellFormedSentence("$GPXXX" + commas + "*88") );
-}
-
-BOOST_AUTO_TEST_CASE( WellFormedWithLowercaseHexCharacters )
-{
-    BOOST_CHECK( isWellFormedSentence("$GPXXX*af") );
-    BOOST_CHECK( isWellFormedSentence("$GPXXX*3b") );
-    BOOST_CHECK( isWellFormedSentence("$GPXXX*c5") );
-}
-
-BOOST_AUTO_TEST_CASE( WellFormedWithUppercaseHexCharacters )
-{
-    BOOST_CHECK( isWellFormedSentence("$GPXXX*DC") );
-    BOOST_CHECK( isWellFormedSentence("$GPXXX*7E") );
-    BOOST_CHECK( isWellFormedSentence("$GPXXX*A8") );
-}
-
-BOOST_AUTO_TEST_CASE( WellFormedTypicalSentences )
-{
-    BOOST_CHECK( isWellFormedSentence("$GPGLL,5425.31,N,107.03,W,82610*69") );
-    BOOST_CHECK( isWellFormedSentence("$GPGGA,113922.000,3722.5993,N,00559.2458,W,1,0,,4.0,M,,M,,*40") );
-    BOOST_CHECK( isWellFormedSentence("$GPRMC,113922.000,A,3722.5993,N,00559.2458,W,0.000,0.00,150914,,A*62") );
-    BOOST_CHECK( isWellFormedSentence("$GPMSS,55,27,318.0,100,*66") );
-}
-
-BOOST_AUTO_TEST_CASE( IllFormedMissingSuffix )
-{
-    BOOST_CHECK( ! isWellFormedSentence("") );
-    BOOST_CHECK( ! isWellFormedSentence("$") );
-    BOOST_CHECK( ! isWellFormedSentence("$G") );
-    BOOST_CHECK( ! isWellFormedSentence("$GP") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPG") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPGL") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPGLL") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPGLL,") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPGLL*") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPGLL,*") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPGLL*1") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPGLL,*2") );
-}
-
-BOOST_AUTO_TEST_CASE( IllFormedDollar )
-{
-    BOOST_CHECK( ! isWellFormedSentence("SGPXXX*01") );
-    BOOST_CHECK( ! isWellFormedSentence( "GPXXX*01") );
-}
-
-BOOST_AUTO_TEST_CASE( IllFormedGP )
-{
-    BOOST_CHECK( ! isWellFormedSentence("$HPXXX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$PXXX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GQXXX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GXXX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$KLXXX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$XXX*01") );
-}
-
-BOOST_AUTO_TEST_CASE( IllFormedType )
-{
-    BOOST_CHECK( ! isWellFormedSentence("$GP*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPXX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GP1XX*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPX%X*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPXX *01") );
-}
-
-BOOST_AUTO_TEST_CASE( IllFormedReservedCharInField )
-{
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX,$77*01") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX,2*3,1*77") );
-}
-
-BOOST_AUTO_TEST_CASE( IllFormedStar )
-{
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX77") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX%77") );
-}
-
-BOOST_AUTO_TEST_CASE( IllFormedChecksum )
-{
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*012") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*3g") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*h2") );
-    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*JL") );
-}
-
-BOOST_AUTO_TEST_SUITE_END()
-
-///////////////////////////////////////////////////////////////////////////////////////////
-
-//BOOST_AUTO_TEST_SUITE( HasValidChecksum )
-
-//BOOST_AUTO_TEST_CASE( ValidChecksumMinimalSentence )
+//BOOST_AUTO_TEST_CASE( WellFormedNoFields )
 //{
-//    BOOST_CHECK( hasValidChecksum("$GPAAA*56") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX*01") );
 //}
 
-//BOOST_AUTO_TEST_CASE( IncorrectChecksumMinimalSentence )
+//BOOST_AUTO_TEST_CASE( WellFormedOneField )
 //{
-//    BOOST_CHECK( ! hasValidChecksum("$GPAAA*55") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX,1*23") );
 //}
 
-//BOOST_AUTO_TEST_CASE( ValidChecksumTypicalSentences )
+//BOOST_AUTO_TEST_CASE( WellFormedTwoFields )
 //{
-//    BOOST_CHECK( hasValidChecksum("$GPGLL,5425.31,N,107.03,W,82610*69") );
-//    BOOST_CHECK( hasValidChecksum("$GPGGA,113922.000,3722.5993,N,00559.2458,W,1,0,,4.0,M,,M,,*40") );
-//    BOOST_CHECK( hasValidChecksum("$GPRMC,113922.000,A,3722.5993,N,00559.2458,W,0.000,0.00,150914,,A*62") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX,1,testing*69") );
 //}
 
-//BOOST_AUTO_TEST_CASE( IncorrectChecksumTypicalSentences )
+//BOOST_AUTO_TEST_CASE( WellFormedEmptyField )
 //{
-//    BOOST_CHECK( ! hasValidChecksum("$GPGLL,5425.31,N,107.03,W,82610*24") );
-//    BOOST_CHECK( ! hasValidChecksum("$GPGGA,113922.000,3722.5993,N,00559.2458,W,1,0,,4.0,M,,M,,*41") );
-//    BOOST_CHECK( ! hasValidChecksum("$GPRMC,113922.000,A,3722.5993,N,00559.2458,W,0.000,0.00,150914,,A*97") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX,*99") );
 //}
 
-//BOOST_AUTO_TEST_CASE( CorrectChecksumWithUppercaseHexDigit )
+//BOOST_AUTO_TEST_CASE( WellFormedManyFields )
 //{
-//    BOOST_CHECK( hasValidChecksum("$GPXYZ*4C") );
+//    std::string commas(1000,','); // 1000 fields
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX" + commas + "*88") );
 //}
 
-//BOOST_AUTO_TEST_CASE( CorrectChecksumWithLowercaseHexDigit )
+//BOOST_AUTO_TEST_CASE( WellFormedWithLowercaseHexCharacters )
 //{
-//    BOOST_CHECK( hasValidChecksum("$GPXYZ*4c") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX*af") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX*3b") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX*c5") );
 //}
 
-//BOOST_AUTO_TEST_CASE( IncorrectChecksumsithUppercaseHexDigit )
+//BOOST_AUTO_TEST_CASE( WellFormedWithUppercaseHexCharacters )
 //{
-//    BOOST_CHECK( ! hasValidChecksum("$GPAAE*5F") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX*DC") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX*7E") );
+//    BOOST_CHECK( isWellFormedSentence("$GPXXX*A8") );
 //}
 
-//BOOST_AUTO_TEST_CASE( IncorrectChecksumWithLowercaseHexDigit )
+//BOOST_AUTO_TEST_CASE( WellFormedTypicalSentences )
 //{
-//    BOOST_CHECK( ! hasValidChecksum("$GPAAE*5f") );
+//    BOOST_CHECK( isWellFormedSentence("$GPGLL,5425.31,N,107.03,W,82610*69") );
+//    BOOST_CHECK( isWellFormedSentence("$GPGGA,113922.000,3722.5993,N,00559.2458,W,1,0,,4.0,M,,M,,*40") );
+//    BOOST_CHECK( isWellFormedSentence("$GPRMC,113922.000,A,3722.5993,N,00559.2458,W,0.000,0.00,150914,,A*62") );
+//    BOOST_CHECK( isWellFormedSentence("$GPMSS,55,27,318.0,100,*66") );
+//}
+
+//BOOST_AUTO_TEST_CASE( IllFormedMissingSuffix )
+//{
+//    BOOST_CHECK( ! isWellFormedSentence("") );
+//    BOOST_CHECK( ! isWellFormedSentence("$") );
+//    BOOST_CHECK( ! isWellFormedSentence("$G") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GP") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPG") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPGL") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPGLL") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPGLL,") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPGLL*") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPGLL,*") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPGLL*1") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPGLL,*2") );
+//}
+
+//BOOST_AUTO_TEST_CASE( IllFormedDollar )
+//{
+//    BOOST_CHECK( ! isWellFormedSentence("SGPXXX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence( "GPXXX*01") );
+//}
+
+//BOOST_AUTO_TEST_CASE( IllFormedGP )
+//{
+//    BOOST_CHECK( ! isWellFormedSentence("$HPXXX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$PXXX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GQXXX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GXXX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$KLXXX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$XXX*01") );
+//}
+
+//BOOST_AUTO_TEST_CASE( IllFormedType )
+//{
+//    BOOST_CHECK( ! isWellFormedSentence("$GP*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GP1XX*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPX%X*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXX *01") );
+//}
+
+//BOOST_AUTO_TEST_CASE( IllFormedReservedCharInField )
+//{
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX,$77*01") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX,2*3,1*77") );
+//}
+
+//BOOST_AUTO_TEST_CASE( IllFormedStar )
+//{
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX77") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX%77") );
+//}
+
+//BOOST_AUTO_TEST_CASE( IllFormedChecksum )
+//{
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*012") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*3g") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*h2") );
+//    BOOST_CHECK( ! isWellFormedSentence("$GPXXX*JL") );
 //}
 
 //BOOST_AUTO_TEST_SUITE_END()
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+BOOST_AUTO_TEST_SUITE( HasValidChecksum )
+
+BOOST_AUTO_TEST_CASE( ValidChecksumMinimalSentence )
+{
+    BOOST_CHECK( hasValidChecksum("$GPAAA*56") );
+}
+
+BOOST_AUTO_TEST_CASE( IncorrectChecksumMinimalSentence )
+{
+    BOOST_CHECK( ! hasValidChecksum("$GPAAA*55") );
+}
+
+BOOST_AUTO_TEST_CASE( ValidChecksumTypicalSentences )
+{
+    BOOST_CHECK( hasValidChecksum("$GPGLL,5425.31,N,107.03,W,82610*69") );
+    BOOST_CHECK( hasValidChecksum("$GPGGA,113922.000,3722.5993,N,00559.2458,W,1,0,,4.0,M,,M,,*40") );
+    BOOST_CHECK( hasValidChecksum("$GPRMC,113922.000,A,3722.5993,N,00559.2458,W,0.000,0.00,150914,,A*62") );
+}
+
+BOOST_AUTO_TEST_CASE( IncorrectChecksumTypicalSentences )
+{
+    BOOST_CHECK( ! hasValidChecksum("$GPGLL,5425.31,N,107.03,W,82610*24") );
+    BOOST_CHECK( ! hasValidChecksum("$GPGGA,113922.000,3722.5993,N,00559.2458,W,1,0,,4.0,M,,M,,*41") );
+    BOOST_CHECK( ! hasValidChecksum("$GPRMC,113922.000,A,3722.5993,N,00559.2458,W,0.000,0.00,150914,,A*97") );
+}
+
+BOOST_AUTO_TEST_CASE( CorrectChecksumWithUppercaseHexDigit )
+{
+    BOOST_CHECK( hasValidChecksum("$GPXYZ*4C") );
+}
+
+BOOST_AUTO_TEST_CASE( CorrectChecksumWithLowercaseHexDigit )
+{
+    BOOST_CHECK( hasValidChecksum("$GPXYZ*4c") );
+}
+
+BOOST_AUTO_TEST_CASE( IncorrectChecksumsithUppercaseHexDigit )
+{
+    BOOST_CHECK( ! hasValidChecksum("$GPAAE*5F") );
+}
+
+BOOST_AUTO_TEST_CASE( IncorrectChecksumWithLowercaseHexDigit )
+{
+    BOOST_CHECK( ! hasValidChecksum("$GPAAE*5f") );
+}
+
+BOOST_AUTO_TEST_SUITE_END()
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 

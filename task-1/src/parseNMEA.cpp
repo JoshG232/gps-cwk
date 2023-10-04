@@ -103,21 +103,36 @@ namespace NMEA
 
 
 
-////      Hexadecimal
 
-
-//      cout << "Test: " << failed << endl;
-//      //Test output
-//      if (failed == true){
-//          return false;
-//      } else {
-//          return true;
-//      }
   }
 
-  bool hasValidChecksum(std::string)
+  bool hasValidChecksum(std::string sentence)
   {
       // Stub definition, needs implementing
+//      char total = "a" - "a";
+//      vector<char> sentenceArr(sentence.begin(),sentence.end());
+//      sentenceArr.erase(sentenceArr.begin());
+//      for (int x = 0; x < 3; x++){
+//          sentenceArr.pop_back();
+//      }
+
+
+
+      int i;
+      int XOR;
+      int c;
+      int sentenceSize =sentence.size();
+      // Calculate checksum ignoring any $'s in the string
+      for (XOR = 0, i = 0; i < sentenceSize; i++) {
+      c = (unsigned char)sentence[i];
+      if (c == '*') break;
+      if (c != '$') XOR ^= c;
+      }
+      cout << hex << XOR << endl;
+      char checksum1 = sentence[sentence.size() - 2];
+      char checksum2 = sentence[sentence.size() - 1];
+
+      cout << "Actual checksum: " << checksum1 << checksum2 << endl;
       return false;
   }
 
