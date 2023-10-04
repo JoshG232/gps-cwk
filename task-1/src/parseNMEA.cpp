@@ -2,7 +2,7 @@
 #include "parseNMEA.h"
 #include "string"
 #include <iostream>
-
+#include <vector>
 using namespace std;
 namespace NMEA
 {
@@ -56,7 +56,31 @@ namespace NMEA
 
         //      cout << star << endl;
               if (star == starTwo){
-                  return true;
+                  // Checking for $ and * in between
+                  string starSign = "*";
+                  vector<char> sentenceArr(sentence.begin(),sentence.end());
+                  int illCharacterCount = 0;
+                  for (const char &c: sentenceArr) {
+                      cout << c;
+                      if (c == dollarSign[0] or c == starSign[0]){
+                        illCharacterCount++;
+                      }
+                  }
+                  if (illCharacterCount > 2){
+                      return false;
+                  } else {
+                      char hex1 = sentence[sentence.size() -2];
+                      char hex2 = sentence[sentence.size() -1];
+
+
+
+                      if (isxdigit(hex1) and isxdigit(hex2)){
+                          return true;
+                      } else {
+                          return false;
+                      }
+                  }
+
               } else {
                   return false;
               }
@@ -80,16 +104,7 @@ namespace NMEA
 
 
 ////      Hexadecimal
-//      char hex1 = sentence[sentence.size() -2];
-//      char hex2 = sentence[sentence.size() -1];
 
-
-
-//      if (isxdigit(hex1) and isxdigit(hex2)){
-//          failed = false;
-//      } else {
-//          failed = true;
-//      }
 
 //      cout << "Test: " << failed << endl;
 //      //Test output
