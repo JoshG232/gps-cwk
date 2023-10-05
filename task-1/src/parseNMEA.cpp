@@ -67,6 +67,7 @@ namespace NMEA
                       }
                   }
                   if (illCharacterCount > 2){
+                      cout << "Too many $ or * detected" << endl;
                       return false;
                   } else {
                       char hex1 = sentence[sentence.size() -2];
@@ -77,6 +78,7 @@ namespace NMEA
                       if (isxdigit(hex1) and isxdigit(hex2)){
                           return true;
                       } else {
+                          cout << "Sentence ending is not a hexidecimal" << endl;
                           return false;
                       }
                   }
