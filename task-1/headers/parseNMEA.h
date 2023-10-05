@@ -24,7 +24,7 @@ namespace NMEA
    * For ill-formed sentences, this function returns false (it does not throw an
    * exception or terminate the program).
    */
-  bool isWellFormedSentence(std::string sentence);
+  bool isWellFormedSentence(std::string);
 
 
   /* Verify whether a sentence has a valid checksum.
@@ -33,7 +33,7 @@ namespace NMEA
    *
    * Pre-condition: the parameter is a well-formed NMEA sentence.
    */
-  bool hasValidChecksum(std::string sentence);
+  bool hasValidChecksum(std::string);
 
 
   /* The first component of the pair is a NMEA sentence format.
